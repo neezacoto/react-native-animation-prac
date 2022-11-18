@@ -1,11 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { useEffect } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
 
 export default function App() {
+  const progress = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(progress, 
+      {toValue: 1}).start()
+  },[progress])
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Animated.View style={[styles.square, {opacity: progress}]} />
     </View>
   );
 }
@@ -17,4 +24,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  square: {
+    width: 100,
+    height: 100,
+    backgroundColor: "dodgerblue"
+  }
 });
